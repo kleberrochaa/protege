@@ -4,7 +4,7 @@ describe('Protege INTRANET', () => {
         cy.viewport(1280, 720);
         cy.fazerLoginHomolog(); // usa a função criada
     });
-
+    
     afterEach(function () {
   if (this.currentTest.state === 'failed') {
     cy.prtintErro(this.currentTest.title)
