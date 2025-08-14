@@ -1,11 +1,11 @@
-describe('Edificação Medio Risco', () => {
+describe('Edificação Alto Risco', () => {
     beforeEach(() => {
         cy.visit('http://wfly18hml02.sesp.parana/sespintranet/');
         cy.viewport(1280, 720);
         cy.fazerLoginDev(); // usa a função criada
     });
 
-    it('Cadastrar Edificação Medio Risco', () => {
+    it('Cadastrar Edificação Alto Risco', () => {
         //Acessando a Consulta Geral
         cy.origin('https://protfacildev-intra-protegefacildev-hml.paas.celepar.parana', () => {
             cy.contains('.menu-label', 'Cadastro').click();
@@ -26,63 +26,78 @@ describe('Edificação Medio Risco', () => {
             cy.get('button:has(i.fa-arrow-right)').contains('Próximo').click();
 
             //ABA Edificação
-            cy.get('#input-1').type('Edificação Automação');
-
+            cy.get('#input-1').type('Edificação Alto Automação');
+            
             //Respodendo Perguntas
             cy.get('label[for="__BVID__219"]').click();
             cy.get('label[for="__BVID__223"]').click();
             cy.get('label[for="__BVID__227"]').click();
 
             //Seleciona Ocupação de Edificação Grupo
-            cy.get('#input-grupo').select('6');
+            cy.get('#input-grupo').select('11');
 
             //Seleciona Ocupação de Edificação Divisão
-            cy.get('#input-divisao').select('26');
+            cy.get('#input-divisao').select('49');
 
             //Clica no Botão Incluir Ocupação 
             cy.get('button:has(i.fa-plus-circle)').contains('Incluir Ocupação').click();
 
             //Incluir area da edificação
-            cy.get('#input-areaEdificacao').type('100');
+            cy.get('#input-areaEdificacao').type('500');
 
             //A Edificação Possui Área de Risco?
-            cy.get('label[for="__BVID__245"]').click();
+            cy.get('label[for="__BVID__244"]').click();
+
+            //Area de Risco
+            cy.get('#input-areaRisco').type('100');
 
             //A Edificação é de Uso Compartilhado ou em Condomínio? * 
             cy.get('label[for="__BVID__249"]').click();
 
             //Altura da Edificação (m)
-            cy.get('#input-group-alturaEdificacao > div > #input-alturaEdificacao').type('10');
+            cy.get('#input-group-alturaEdificacao > div > #input-alturaEdificacao').type('40');
 
             //Número Total de Pavimentos da Edificação *
-            cy.get('#input-group-pavimentos > div > #input-alturaEdificacao').type('1');
+            cy.get('#input-group-pavimentos > div > #input-alturaEdificacao').type('3');
 
             //A Edificação Possui Pavimentos em Subsolo? *
             cy.get('label[for="__BVID__257"]').click();
 
             //A Edificação possui Líquido Inflamável e/ou Combustível? *
-            cy.get('label[for="__BVID__261"]').click();
+            cy.get('label[for="__BVID__260"]').click(); //Sim
+
+            //Volume de Líquido Inflamável ou Combustível (l)
+            cy.get('#input-inflamavel').select('15');
 
             //A Edificação possui Gás Liquefeito de Petróleo (GLP)? *
-            cy.get('label[for="__BVID__265"]').click();
+            cy.get('label[for="__BVID__264"]').click(); //Sim
 
+            //Volume de Gás Liquefeito de Petróleo (GLP) (kg)
+            cy.get('#input-glp-type').select('1090');
+            
             //A Edificação possui Gás Natural? *
             cy.get('label[for="__BVID__269"]').click();
 
             //Capacidade de Público da Edificação 
-            cy.get('#input-capacidade').type('11');
+            cy.get('#input-capacidade').type('120');
 
             //A Edificação possui Memorial Simplificado? 
             cy.get('label[for="__BVID__275"]').click();
 
             //A Edificação possui Projeto Técnico Aprovado (PPI, PSCIP, PTPID)? 
-            cy.get('label[for="__BVID__301"]').click();
+            cy.get('label[for="__BVID__307"]').click();
 
             //Risco de Incêndio da Edificação
-            cy.get('#input-risco-incendio').select('1');
+            cy.get('#input-risco-incendio').select('3');
 
             //Medidas de Prevenção e Combate a Incêndio da Edificação 
             cy.get('#input-medidas').select('52');
+            cy.get('button:has(i.fa-plus-circle)').contains('Incluir Medida').click();
+
+            cy.get('#input-medidas').select('53');
+            cy.get('button:has(i.fa-plus-circle)').contains('Incluir Medida').click();
+
+            cy.get('#input-medidas').select('55');
             cy.get('button:has(i.fa-plus-circle)').contains('Incluir Medida').click();
 
             //clique no botão próximo
@@ -99,9 +114,9 @@ describe('Edificação Medio Risco', () => {
             cy.get('button:has(i.fa-archive)').contains('Gravar').click();
 
             //Modal de Confirmação
-            cy.get('#bv-modal-cadastro-medio-alto-edificacao').contains('Médio Risco').should('be.visible');
+            cy.get('#bv-modal-cadastro-medio-alto-edificacao').contains('Alto Risco').should('be.visible');
             cy.wait(500);
-            cy.screenshot('Sucesso/Edificação de Medio Risco OK');
+            cy.screenshot('Sucesso/Edificação de Alto Risco OK');
 
             //Clicar no Botão OK
             cy.get('button:has(i.fa-check-circle)').contains('OK').click();
