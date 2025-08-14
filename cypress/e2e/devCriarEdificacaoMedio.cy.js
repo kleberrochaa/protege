@@ -32,6 +32,7 @@ describe('Protege INTRANET', () => {
 
             //ABA Edificação
             cy.get('#input-1').type('Edificação Automação');
+            
             //Respodendo Perguntas
             cy.get('label[for="__BVID__219"]').click();
             cy.get('label[for="__BVID__223"]').click();

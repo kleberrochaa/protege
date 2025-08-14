@@ -41,5 +41,6 @@ Cypress.Commands.add('fazerLoginDev', () => {
 
 Cypress.Commands.add('printErro', (testTitle) => {
   const cleanTitle = testTitle.replace(/[:\/]/g, '') // limpar caracteres inválidos no nome
-  cy.screenshot(`falhas/${cleanTitle}`, { capture: 'runner' })
+  cy.task('clearfalhasFolder');
+  cy.screenshot(`falhas/${cleanTitle}`, { capture: 'fullPage' })
 })
