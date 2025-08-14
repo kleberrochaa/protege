@@ -4,12 +4,11 @@ describe('Protege INTRANET', () => {
         cy.viewport(1280, 720);
         cy.fazerLoginDev(); // usa a função criada
     });
-
-afterEach(function () {
-  if (this.currentTest.state === 'failed') {
-    cy.prtintErro(this.currentTest.title)
-  }
-})
+    afterEach(function () {
+        if (this.currentTest.state === 'failed') {
+            cy.printErro(this.currentTest.title)
+        }
+    });
 
     it('Cadastrar Edificação Medio Risco', () => {
         //Acessando a Consulta Geral
@@ -22,10 +21,11 @@ afterEach(function () {
 
             //Inserir endereço da edificação
             cy.get('#input-cep').type('83501-000');
-            cy.get('#input-numero').type('123');
+            cy.get('#input-numero').type(Math.floor(Math.random() * 10000).toString());
 
             //Clique no botão Incluir Endereço
             cy.get('button:has(i.fa-plus-circle)').click();
+            cy.wait(700);
 
             //clique no botão próximo
             cy.get('button:has(i.fa-arrow-right)').contains('Próximo').click();
@@ -39,14 +39,15 @@ afterEach(function () {
 
             //Seleciona Ocupação de Edificação Grupo
             cy.get('#input-grupo').select('6');
+
             //Seleciona Ocupação de Edificação Divisão
             cy.get('#input-divisao').select('26');
 
             //Clica no Botão Incluir Ocupação 
             cy.get('button:has(i.fa-plus-circle)').contains('Incluir Ocupação').click();
-            
+
             //Incluir area da edificação
-            cy.get('#input-areaEdificacao').type('100');  
+            cy.get('#input-areaEdificacao').type('100');
 
             //A Edificação Possui Área de Risco?
             cy.get('label[for="__BVID__245"]').click();
@@ -73,7 +74,7 @@ afterEach(function () {
             cy.get('label[for="__BVID__269"]').click();
 
             //Capacidade de Público da Edificação 
-            cy.get('#input-capacidade').type('11');  
+            cy.get('#input-capacidade').type('11');
 
             //A Edificação possui Memorial Simplificado? 
             cy.get('label[for="__BVID__275"]').click();
@@ -89,20 +90,25 @@ afterEach(function () {
             cy.get('button:has(i.fa-plus-circle)').contains('Incluir Medida').click();
 
             //clique no botão próximo
-            cy.get('button:has(i.fa-arrow-right)').contains('Próximo').click();            
+            cy.get('button:has(i.fa-arrow-right)').contains('Próximo').click();
 
             //ABA Proprietário
             cy.get('#input-pessoa').type('04545778429');
             cy.wait(500);
+
             //clique no botão próximo
-            cy.get('button:has(i.fa-arrow-right)').contains('Próximo').click(); 
+            cy.get('button:has(i.fa-arrow-right)').contains('Próximo').click();
 
             //ABA Acesso Principal
             cy.get('button:has(i.fa-archive)').contains('Gravar').click();
-            cy.get('.toast-message').should('contain', 'Edificação cadastrada com sucesso!');
-            cy.get('.toast-message').should('be.visible');  
-            cy.screenshot('Edificação Criada com Sucesso');
+
+            //Modal de Confirmação
+            cy.get('#bv-modal-cadastro-medio-alto-edificacao').contains('Médio Risco').should('be.visible');
+            cy.wait(500);
+            cy.screenshot('Sucesso/Edificação de Medio Risco OK');
+
+            //Clicar no Botão OK
+            cy.get('button:has(i.fa-check-circle)').contains('OK').click();
         });
     });
-});
-
+})
